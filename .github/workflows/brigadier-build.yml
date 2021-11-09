@@ -1,0 +1,32 @@
+name: Build Brigadier
+
+on: [ push ]
+
+env:
+  FULL_VERSION: 1.0.18
+  MINOR_VERSION: 18
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.3.5
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2.3.1
+        with:
+          java-version: '8'
+          distribution: 'zulu'
+          cache: 'gradle'
+
+      - name: Build with Gradle
+        run: |
+          chmod -R +x gradlew
+          ./gradlew build --stacktrace -PbuildNumber=${{ env.MINOR_VERSION }}
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: brigadier-${{ env.FULL_VERSION }}
+          path: build/libs/brigadier-${{ env.FULL_VERSION }}.jar
