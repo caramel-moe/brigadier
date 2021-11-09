@@ -33,4 +33,4 @@ jobs:
           name: brigadier-${{ env.FULL_VERSION }}
           path: |
             build/libs/brigadier-${{ env.FULL_VERSION }}.jar
-            sha1.txt
+            build/libs/sha1.txt
