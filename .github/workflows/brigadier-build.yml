@@ -24,9 +24,13 @@ jobs:
         run: |
           chmod -R +x gradlew
           ./gradlew build --stacktrace -PbuildNumber=${{ env.MINOR_VERSION }}
+          cd build/libs
+          echo $(sha1sum brigadier-${{ env.FULL_VERSION }}.jar) > sha1.txt
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.3
         with:
           name: brigadier-${{ env.FULL_VERSION }}
-          path: build/libs/brigadier-${{ env.FULL_VERSION }}.jar
+          path: |
+            build/libs/brigadier-${{ env.FULL_VERSION }}.jar
+            sha1.txt
